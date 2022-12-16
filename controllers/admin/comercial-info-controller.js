@@ -1,11 +1,11 @@
 const db = require("../../models");
-const PaymentMethod = db.PaymentMethod;
+const ComercialInfo = db.ComercialInfo;
 const Op = db.Sequelize.Op;
 
 
 exports.create = (req, res) => {
 
-    if (!req.body.name) {
+    if (!req.body.name || !req.body.phone || !req.body.adress || !req.body.email || !req.body.schedule) {
         res.status(400).send({
             message: "Faltan campos por rellenar."
         });
@@ -13,13 +13,16 @@ exports.create = (req, res) => {
         return;
     }
 
-    const paymentMethod = {
+    const comercialinfo = {
         name: req.body.name,
+        phone: req.body.phone,
+        adress: req.body.adress,
+        email: req.body.email,
+        schedule: req.body.schedule,
         visible: req.body.visible ? req.body.visible : true
-       
     };
 
-   PaymentMethod.create(paymentMethod).then(data => {
+    ComercialInfo.create(comercialinfo).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({
@@ -29,17 +32,21 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
+
     let whereStatement = {};
 
-    if(req.query.name) 
-        whereStatement.name = {[Op.substring]: req.query.name};
-
+    if(req.query.type) 
+   
+        whereStatement.type = {[Op.substring]: req.query.type};
+    
+       
     if(req.query.valid)
         whereStatement.valid = {[Op.substring]: req.query.valid};
    
+
     let condition = Object.keys(whereStatement).length > 0 ? {[Op.and]: [whereStatement]} : {};
 
-    PaymentMethod.findAll({ where: condition }).then(data => {
+    ComercialInfo.findAll({ where: condition }).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({
@@ -53,8 +60,9 @@ exports.findOne = (req, res) => {
 
     const id = req.params.id;
 
-    PaymentMethod.findByPk(id).then(data => {
-       
+
+    ComercialInfo.findByPk(id).then(data => {
+        
 
         if (data) {
             res.status(200).send(data);
@@ -75,15 +83,14 @@ exports.update = (req, res) => {
 
     const id = req.params.id;
 
-    PaymentMethod.update(req.body, {
+    ComercialInfo.update(req.body, {
  
         where: { id: id }
-       
+      
     }).then(num => {
         if (num == 1) {
             res.status(200).send({
                 message: "El elemento ha sido actualizado correctamente."
-               
             });
         } else {
             res.status(404).send({
@@ -101,7 +108,7 @@ exports.delete = (req, res) => {
 
     const id = req.params.id;
 
-    PaymentMethod.destroy({
+    ComercialInfo.destroy({
         where: { id: id }
     }).then(num => {
         if (num == 1) {

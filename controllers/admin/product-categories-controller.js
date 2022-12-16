@@ -1,5 +1,5 @@
 const db = require("../../models");
-const PaymentMethod = db.PaymentMethod;
+const ProductCategory = db.ProductCategory;
 const Op = db.Sequelize.Op;
 
 
@@ -13,13 +13,13 @@ exports.create = (req, res) => {
         return;
     }
 
-    const paymentMethod = {
+    const productcategory = {
         name: req.body.name,
-        visible: req.body.visible ? req.body.visible : true
-       
+        active: req.body.active ? req.body.active : true
     };
 
-   PaymentMethod.create(paymentMethod).then(data => {
+    
+   ProductCategory.create(productcategory).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({
@@ -29,17 +29,14 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    let whereStatement = {};
 
+    let whereStatement = {};
     if(req.query.name) 
         whereStatement.name = {[Op.substring]: req.query.name};
-
-    if(req.query.valid)
-        whereStatement.valid = {[Op.substring]: req.query.valid};
-   
+       
     let condition = Object.keys(whereStatement).length > 0 ? {[Op.and]: [whereStatement]} : {};
 
-    PaymentMethod.findAll({ where: condition }).then(data => {
+    ProductCategory.findAll({ where: condition }).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({
@@ -53,8 +50,8 @@ exports.findOne = (req, res) => {
 
     const id = req.params.id;
 
-    PaymentMethod.findByPk(id).then(data => {
-       
+
+    ProductCategory.findByPk(id).then(data => {
 
         if (data) {
             res.status(200).send(data);
@@ -75,15 +72,12 @@ exports.update = (req, res) => {
 
     const id = req.params.id;
 
-    PaymentMethod.update(req.body, {
- 
+    ProductCategory.update(req.body, {
         where: { id: id }
-       
     }).then(num => {
         if (num == 1) {
             res.status(200).send({
                 message: "El elemento ha sido actualizado correctamente."
-               
             });
         } else {
             res.status(404).send({
@@ -101,7 +95,7 @@ exports.delete = (req, res) => {
 
     const id = req.params.id;
 
-    PaymentMethod.destroy({
+    ProductCategory.destroy({
         where: { id: id }
     }).then(num => {
         if (num == 1) {

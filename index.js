@@ -14,6 +14,8 @@ var corsOptions = {
 // Configuras el funcionamieento de Express
 app.use(cors(corsOptions));
 // A la librería cors pasas las opciones.
+app.use(express.json({limit: "10mb", extended: true}));
+app.use(express.urlencoded({limit: "10mb", extended: true, parameterLimit: 50000}));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Son dos partes de los mismo, habilita recibir llamadas a través de url y jasons para intercambiar datos

@@ -1,11 +1,10 @@
 const db = require("../../models");
-const PaymentMethod = db.PaymentMethod;
+const ImagesConfiguration = db.ImagesConfiguration;
 const Op = db.Sequelize.Op;
-
 
 exports.create = (req, res) => {
 
-    if (!req.body.name) {
+    if (!req.body.entity || !req.body.directory || !req.body.type || !req.body.content || !req.body.grid || !req.body.content_accepted || !req.body.extension_conversion || !req.body.width_px || !req.body.height_px || !req.body.quality) {
         res.status(400).send({
             message: "Faltan campos por rellenar."
         });
@@ -13,13 +12,20 @@ exports.create = (req, res) => {
         return;
     }
 
-    const paymentMethod = {
-        name: req.body.name,
-        visible: req.body.visible ? req.body.visible : true
-       
+    const imagesconfiguration = {
+        entity: req.body.entity,
+        directory: req.body.directory,
+        type: req.body.type,
+        content: req.body.content,
+        grid: req.body.grid,
+        content_accepted: req.body.content_accepted,
+        extension_conversion: req.body.extension_conversion,
+        width_px: req.body.width_px,
+        height_px: req.body.height_px,
+        quality: req.body.quality
     };
 
-   PaymentMethod.create(paymentMethod).then(data => {
+    ImagesConfiguration.create(imagesconfiguration).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({
@@ -29,17 +35,21 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
+
     let whereStatement = {};
 
-    if(req.query.name) 
-        whereStatement.name = {[Op.substring]: req.query.name};
-
+    if(req.query.type) 
+   
+        whereStatement.type = {[Op.substring]: req.query.type};
+    
+       
     if(req.query.valid)
         whereStatement.valid = {[Op.substring]: req.query.valid};
    
+
     let condition = Object.keys(whereStatement).length > 0 ? {[Op.and]: [whereStatement]} : {};
 
-    PaymentMethod.findAll({ where: condition }).then(data => {
+    ImagesConfiguration.findAll({ where: condition }).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({
@@ -53,8 +63,9 @@ exports.findOne = (req, res) => {
 
     const id = req.params.id;
 
-    PaymentMethod.findByPk(id).then(data => {
-       
+
+    ImagesConfiguration.findByPk(id).then(data => {
+        
 
         if (data) {
             res.status(200).send(data);
@@ -75,15 +86,14 @@ exports.update = (req, res) => {
 
     const id = req.params.id;
 
-    PaymentMethod.update(req.body, {
+    ImagesConfiguration.update(req.body, {
  
         where: { id: id }
-       
+      
     }).then(num => {
         if (num == 1) {
             res.status(200).send({
                 message: "El elemento ha sido actualizado correctamente."
-               
             });
         } else {
             res.status(404).send({
@@ -101,7 +111,7 @@ exports.delete = (req, res) => {
 
     const id = req.params.id;
 
-    PaymentMethod.destroy({
+    ImagesConfiguration.destroy({
         where: { id: id }
     }).then(num => {
         if (num == 1) {

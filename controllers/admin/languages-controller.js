@@ -1,11 +1,11 @@
 const db = require("../../models");
-const PaymentMethod = db.PaymentMethod;
+const Language = db.Language;
 const Op = db.Sequelize.Op;
 
 
 exports.create = (req, res) => {
 
-    if (!req.body.name) {
+    if (!req.body.name || !req.body.alias) {
         res.status(400).send({
             message: "Faltan campos por rellenar."
         });
@@ -13,13 +13,12 @@ exports.create = (req, res) => {
         return;
     }
 
-    const paymentMethod = {
+    const language = {
         name: req.body.name,
-        visible: req.body.visible ? req.body.visible : true
-       
+        alias: req.body.alias
     };
 
-   PaymentMethod.create(paymentMethod).then(data => {
+   Language.create(language).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({
@@ -29,17 +28,14 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    let whereStatement = {};
 
+    let whereStatement = {};
     if(req.query.name) 
         whereStatement.name = {[Op.substring]: req.query.name};
-
-    if(req.query.valid)
-        whereStatement.valid = {[Op.substring]: req.query.valid};
-   
+       
     let condition = Object.keys(whereStatement).length > 0 ? {[Op.and]: [whereStatement]} : {};
 
-    PaymentMethod.findAll({ where: condition }).then(data => {
+    Language.findAll({ where: condition }).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({
@@ -53,8 +49,8 @@ exports.findOne = (req, res) => {
 
     const id = req.params.id;
 
-    PaymentMethod.findByPk(id).then(data => {
-       
+
+    Language.findByPk(id).then(data => {
 
         if (data) {
             res.status(200).send(data);
@@ -75,15 +71,12 @@ exports.update = (req, res) => {
 
     const id = req.params.id;
 
-    PaymentMethod.update(req.body, {
- 
+    Language.update(req.body, {
         where: { id: id }
-       
     }).then(num => {
         if (num == 1) {
             res.status(200).send({
                 message: "El elemento ha sido actualizado correctamente."
-               
             });
         } else {
             res.status(404).send({
@@ -101,7 +94,7 @@ exports.delete = (req, res) => {
 
     const id = req.params.id;
 
-    PaymentMethod.destroy({
+    Language.destroy({
         where: { id: id }
     }).then(num => {
         if (num == 1) {
