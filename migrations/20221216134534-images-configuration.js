@@ -4,7 +4,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
    
-    await queryInterface.createTable('images-configuration', {
+    await queryInterface.createTable('image_configurations', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -31,19 +31,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      content_accepted: {
+      contentAccepted: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      extension_conversion: {
+      extensionConversion: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      width_px: {
+      widthPx: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      height_px: {
+      heightPx: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
@@ -68,6 +68,6 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
    
-    await queryInterface.dropTable('images-configuration');
+    await queryInterface.dropTable('image_configurations');
   }
 };

@@ -4,7 +4,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
    
-    await queryInterface.createTable('comercial_infos', {
+    await queryInterface.createTable('contacts', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,6 +12,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      surname: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -27,13 +31,19 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
-      schedule: {
-        allowNull: false,
+      message: {
+        allowNull: true,
         type: Sequelize.STRING
       },
-      visible: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN
+
+      fingerprintId:{
+        type: Sequelize.INTEGER, 
+        references: { 
+              model: 'fingerprints', 
+              key: 'id' 
+        }, 
+        onUpdate: 'CASCADE', 
+        onDelete: 'SET NULL' 
       },
       createdAt: {
         allowNull: false,
@@ -52,6 +62,6 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
    
-    await queryInterface.dropTable('comercial_infos');
+    await queryInterface.dropTable('contacts');
   }
 };

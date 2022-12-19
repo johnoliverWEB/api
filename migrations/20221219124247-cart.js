@@ -4,20 +4,30 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
    
-    await queryInterface.createTable('product_categories', {
+    await queryInterface.createTable('carts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        allowNull: false,
-        type: Sequelize.STRING
+      customerId:{
+        type: Sequelize.INTEGER,
+        references: { 
+              model: 'customers', 
+              key: 'id' 
+        }, 
+        onUpdate: 'CASCADE', 
+        onDelete: 'SET NULL',
       },
-      active: {
-        allowNull: true,
-        type: Sequelize.BOOLEAN
+      fingerprintId:{
+        type: Sequelize.INTEGER, 
+        references: { 
+              model: 'fingerprints', 
+              key: 'id' 
+        }, 
+        onUpdate: 'CASCADE', 
+        onDelete: 'SET NULL' 
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +46,6 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
    
-    await queryInterface.dropTable('product_categories');
+    await queryInterface.dropTable('carts');
   }
 };

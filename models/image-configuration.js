@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define('ImagesConfiguration', {
+    return sequelize.define('ImageConfiguration', {
         id: {
             autoIncrement: true,
             type: DataTypes.INTEGER,
@@ -8,38 +8,38 @@ module.exports = function(sequelize, DataTypes) {
             primaryKey: true
         },
         entity: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
             allowNull: false
         },
         directory: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
             allowNull: false
         },
         type: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
             allowNull: false
         },
         content: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
             allowNull: false
         },
         grid: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(255),
             allowNull: false
         },
-        content_accepted: {
-            type: DataTypes.STRING,
+        contentAccepted: {
+            type: DataTypes.STRING(255),
             allowNull: false
         },
-        extension_conversion: {
-            type: DataTypes.STRING,
+        extensionConversion: {
+            type: DataTypes.STRING(255),
             allowNull: false
         },
-        width_px: {
+        widthPx: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        height_px: {
+        heightPx: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
@@ -49,7 +49,7 @@ module.exports = function(sequelize, DataTypes) {
         }
     }, {
         sequelize,
-        tableName: 'images-configuration',
+        tableName: 'image_configurations',
         timestamps: true,
         paranoid: true,
         indexes: [

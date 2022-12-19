@@ -4,7 +4,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
    
-    await queryInterface.createTable('comercial_infos', {
+    await queryInterface.createTable('products', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,25 +15,31 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      phone: {
+      price: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      email: {
-        allowNull: false,
-        type: Sequelize.STRING
+      taxesId:{
+        type: Sequelize.INTEGER,
+        references: { 
+              model: 'taxes', 
+              key: 'id' 
+        }, 
+        onUpdate: 'CASCADE', 
+        onDelete: 'SET NULL',
       },
-      adress: {
+      featured: {
         allowNull: true,
         type: Sequelize.STRING
       },
-      schedule: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      visible: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN
+      productcategoriesId:{
+        type: Sequelize.INTEGER, 
+        references: { 
+              model: 'product_categories', 
+              key: 'id' 
+        }, 
+        onUpdate: 'CASCADE', 
+        onDelete: 'SET NULL',
       },
       createdAt: {
         allowNull: false,
@@ -52,6 +58,6 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
    
-    await queryInterface.dropTable('comercial_infos');
+    await queryInterface.dropTable('products');
   }
 };

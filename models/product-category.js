@@ -13,11 +13,11 @@ module.exports = function(sequelize, DataTypes) {
         },
         active: {
             type: DataTypes.BOOLEAN,
-            allowNull: false
+            allowNull: true
         }
     }, {
         sequelize,
-        tableName: 'product-categories',
+        tableName: 'product_categories',
         timestamps: true,
         paranoid: true,
         indexes: [

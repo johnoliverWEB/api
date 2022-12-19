@@ -4,36 +4,32 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
    
-    await queryInterface.createTable('comercial_infos', {
+    await queryInterface.createTable('locale', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      languageAlias: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      phone: {
+      entity: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      email: {
+      entityKey: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      key: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      adress: {
-        allowNull: true,
-        type: Sequelize.STRING
-      },
-      schedule: {
+      value: {
         allowNull: false,
         type: Sequelize.STRING
-      },
-      visible: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
@@ -52,6 +48,6 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
    
-    await queryInterface.dropTable('comercial_infos');
+    await queryInterface.dropTable('locale');
   }
 };

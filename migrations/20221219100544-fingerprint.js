@@ -4,36 +4,25 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
    
-    await queryInterface.createTable('comercial_infos', {
+    await queryInterface.createTable('fingerprints', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      customerId: { 
+        type: Sequelize.INTEGER, 
+        references: { 
+              model: 'customers', 
+              key: 'id' 
+        }, 
+        onUpdate: 'CASCADE', 
+        onDelete: 'SET NULL' 
+     },
+      fingerprint: {
         allowNull: false,
         type: Sequelize.STRING
-      },
-      phone: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      email: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      adress: {
-        allowNull: true,
-        type: Sequelize.STRING
-      },
-      schedule: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      visible: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
@@ -52,6 +41,6 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
    
-    await queryInterface.dropTable('comercial_infos');
+    await queryInterface.dropTable('fingerprints');
   }
 };
