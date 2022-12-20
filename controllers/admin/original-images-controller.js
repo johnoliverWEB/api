@@ -1,10 +1,10 @@
 const db = require("../../models");
-const ImagesConfiguration = db.ImagesConfiguration;
+const OriginalImage = db.OriginalImage;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
 
-    if (!req.body.entity || !req.body.directory || !req.body.type || !req.body.content || !req.body.grid || !req.body.contentAccepted || !req.body.extensionConversion || !req.body.widthPx || !req.body.heightPx || !req.body.quality) {
+    if (!req.body.path || !req.body.entity || !req.body.entityId || !req.body.languageAlias || !req.body.fileName || !req.body.content || !req.body.mymeType) {
         res.status(400).send({
             message: "Faltan campos por rellenar."
         });
@@ -12,20 +12,16 @@ exports.create = (req, res) => {
         return;
     }
 
-    const imagesconfiguration = {
+    const originalimage = {
+        path: req.body.path,
         entity: req.body.entity,
-        directory: req.body.directory,
-        type: req.body.type,
-        content: req.body.content,
-        grid: req.body.grid,
-        contentAccepted: req.body.contentAccepted,
-        extensionConversion: req.body.extensionConversion,
-        widthPx: req.body.widthPx,
-        heightPx: req.body.heightPx,
-        quality: req.body.quality
+        entityId: req.body.entityId,
+        languageAlias: req.body.languageAlias,
+        fileName: req.body.fileName,
+        mymeType: req.body.mymeType,
     };
 
-    ImagesConfiguration.create(imagesconfiguration).then(data => {
+    OriginalImage.create(originalimage).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({
@@ -49,7 +45,7 @@ exports.findAll = (req, res) => {
 
     let condition = Object.keys(whereStatement).length > 0 ? {[Op.and]: [whereStatement]} : {};
 
-    ImagesConfiguration.findAll({ where: condition }).then(data => {
+    OriginalImage.findAll({ where: condition }).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({
@@ -64,7 +60,7 @@ exports.findOne = (req, res) => {
     const id = req.params.id;
 
 
-    ImagesConfiguration.findByPk(id).then(data => {
+    OriginalImage.findByPk(id).then(data => {
         
 
         if (data) {
@@ -86,7 +82,7 @@ exports.update = (req, res) => {
 
     const id = req.params.id;
 
-    ImagesConfiguration.update(req.body, {
+    OriginalImage.update(req.body, {
  
         where: { id: id }
       
@@ -111,7 +107,7 @@ exports.delete = (req, res) => {
 
     const id = req.params.id;
 
-    ImagesConfiguration.destroy({
+    OriginalImage.destroy({
         where: { id: id }
     }).then(num => {
         if (num == 1) {
