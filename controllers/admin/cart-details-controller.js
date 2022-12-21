@@ -13,7 +13,7 @@ exports.create = (req, res) => {
     }
 
     const cartdetail = {
-        quatity: req.body.quantity,
+        quantity: req.body.quantity,
         price: req.body.price,
         unitOfMeasurement: req.body.unitOfMeasurement,
         productName: req.body.productName,

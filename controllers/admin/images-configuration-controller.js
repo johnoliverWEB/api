@@ -1,5 +1,5 @@
 const db = require("../../models");
-const ImagesConfiguration = db.ImagesConfiguration;
+const ImageConfiguration = db.ImageConfiguration;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
@@ -12,7 +12,7 @@ exports.create = (req, res) => {
         return;
     }
 
-    const imagesconfiguration = {
+    const imageconfiguration = {
         entity: req.body.entity,
         directory: req.body.directory,
         type: req.body.type,
@@ -25,7 +25,7 @@ exports.create = (req, res) => {
         quality: req.body.quality
     };
 
-    ImagesConfiguration.create(imagesconfiguration).then(data => {
+    ImageConfiguration.create(imageconfiguration).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({
@@ -49,7 +49,7 @@ exports.findAll = (req, res) => {
 
     let condition = Object.keys(whereStatement).length > 0 ? {[Op.and]: [whereStatement]} : {};
 
-    ImagesConfiguration.findAll({ where: condition }).then(data => {
+    ImageConfiguration.findAll({ where: condition }).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({
@@ -64,7 +64,7 @@ exports.findOne = (req, res) => {
     const id = req.params.id;
 
 
-    ImagesConfiguration.findByPk(id).then(data => {
+    ImageConfiguration.findByPk(id).then(data => {
         
 
         if (data) {
@@ -86,7 +86,7 @@ exports.update = (req, res) => {
 
     const id = req.params.id;
 
-    ImagesConfiguration.update(req.body, {
+    ImageConfiguration.update(req.body, {
  
         where: { id: id }
       
@@ -111,7 +111,7 @@ exports.delete = (req, res) => {
 
     const id = req.params.id;
 
-    ImagesConfiguration.destroy({
+    ImageConfiguration.destroy({
         where: { id: id }
     }).then(num => {
         if (num == 1) {

@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
 
-    if (!req.body.Fingerprint) {
+    if (!req.body.fingerprint) {
         res.status(400).send({
             message: "Faltan campos por rellenar."
         });

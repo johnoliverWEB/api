@@ -13,10 +13,8 @@ exports.create = (req, res) => {
     }
 
     const saleerror = {
-        quatity: req.body.quantity,
-        price: req.body.price,
-        unitOfMeasurement: req.body.unitOfMeasurement,
-        productName: req.body.productName,
+       errorCode: req.body.errorCode,
+       errorMessage: req.body.errorMessage
     };
 
     SaleError.create(saleerror).then(data => {

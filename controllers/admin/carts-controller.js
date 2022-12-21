@@ -13,6 +13,10 @@ exports.create = (req, res) => {
         return;
     }
 
+    const cart = {
+        customerId: req.body.customerId,
+        fingerprintId: req.body.fingerprintId,
+    };
    
    Cart.create(Cart).then(data => {
         res.status(200).send(data);
@@ -26,8 +30,8 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
 
     let whereStatement = {};
-    if(req.query.name) 
-        whereStatement.name = {[Op.substring]: req.query.name};
+    if(req.query.customerId) 
+        whereStatement.customerId = {[Op.substring]: req.query.customerId};
        
     let condition = Object.keys(whereStatement).length > 0 ? {[Op.and]: [whereStatement]} : {};
 

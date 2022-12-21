@@ -4,7 +4,7 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
 
-    if (!req.body.path || !req.body.entity || !req.body.entityId || !req.body.languageAlias || !req.body.fileName || !req.body.content || !req.body.mymeType) {
+    if (!req.body.path || !req.body.entity || !req.body.entityId || !req.body.languageAlias || !req.body.fileName || !req.body.content || !req.body.mimeType) {
         res.status(400).send({
             message: "Faltan campos por rellenar."
         });
@@ -18,7 +18,8 @@ exports.create = (req, res) => {
         entityId: req.body.entityId,
         languageAlias: req.body.languageAlias,
         fileName: req.body.fileName,
-        mymeType: req.body.mymeType,
+        content: req.body.content,
+        mimeType: req.body.mimeType,
     };
 
     OriginalImage.create(originalimage).then(data => {

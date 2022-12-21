@@ -1,5 +1,5 @@
 const db = require("../../models");
-const Sales = db.Sales;
+const Sale = db.Sale;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
@@ -12,7 +12,7 @@ exports.create = (req, res) => {
         return;
     }
 
-    const sales = {
+    const sale = {
         reference: req.body.reference,
         totalPrice: req.body.totalPrice,
         baseTotalPrice: req.body.baseTotalPrice,
@@ -21,7 +21,7 @@ exports.create = (req, res) => {
         emisionHour: req.body.emisionHour,
     };
 
-    Sales.create(sales).then(data => {
+    Sale.create(sale).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({
@@ -45,7 +45,7 @@ exports.findAll = (req, res) => {
 
     let condition = Object.keys(whereStatement).length > 0 ? {[Op.and]: [whereStatement]} : {};
 
-    Sales.findAll({ where: condition }).then(data => {
+    Sale.findAll({ where: condition }).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({
@@ -60,7 +60,7 @@ exports.findOne = (req, res) => {
     const id = req.params.id;
 
 
-    Sales.findByPk(id).then(data => {
+    Sale.findByPk(id).then(data => {
         
 
         if (data) {
@@ -82,7 +82,7 @@ exports.update = (req, res) => {
 
     const id = req.params.id;
 
-    Sales.update(req.body, {
+    Sale.update(req.body, {
  
         where: { id: id }
       
@@ -107,7 +107,7 @@ exports.delete = (req, res) => {
 
     const id = req.params.id;
 
-    Sales.destroy({
+    Sale.destroy({
         where: { id: id }
     }).then(num => {
         if (num == 1) {
