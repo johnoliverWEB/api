@@ -5,22 +5,7 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
 
-    if (!req.body.name || req.body.price) {
-        res.status(400).send({
-            message: "Faltan campos por rellenar."
-        });
-
-        return;
-    }
-
-    const product = {
-        name: req.body.name,
-        price: req.body.price,
-        featured: req.body.featured,
-    };
-
-    
-   Product.create(product).then(data => {
+   Product.create(req.body).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({

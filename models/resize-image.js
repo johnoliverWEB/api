@@ -25,27 +25,78 @@ module.exports = function(sequelize, DataTypes) {
         },
         title: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "Debes introducir un título a la imagen"
+                },
+                notNull:{
+                    msg: "Debes introducir un título a la imagen"
+                }
+            }
         },
         alt: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isInt:{
+                    msg: "Debe ser un número"
+                },
+                notEmpty:{
+                    msg: "El campo alt no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo alt no puede estar vacío"
+                }
+            }
         },
         path: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo path no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo path no puede estar vacío"
+                }
+            }
         },
         entity: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo entity no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo entity no puede estar vacío"
+                }
+            }
         },
         entityId: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo entityId no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo entityId no puede estar vacío"
+                }
+            }
         },
         languageAlias: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo alias de lenguaje no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo alias de lenguaje no puede estar vacío"
+                }
+            }
         },
         fileName: {
             type: DataTypes.STRING(255),

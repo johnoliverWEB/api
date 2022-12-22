@@ -4,20 +4,7 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
 
-    if (!req.body.errorCode || !req.body.errorMessage ) {
-        res.status(400).send({
-            message: "Faltan campos por rellenar."
-        });
-
-        return;
-    }
-
-    const saleerror = {
-       errorCode: req.body.errorCode,
-       errorMessage: req.body.errorMessage
-    };
-
-    SaleError.create(saleerror).then(data => {
+    SaleError.create(req.body).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({

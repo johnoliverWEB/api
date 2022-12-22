@@ -33,26 +33,61 @@ module.exports = function(sequelize, DataTypes) {
         },
         reference: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo referencia no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo referencia no puede estar vacío"
+                }
+            }
         },
         totalPrice: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo precio total no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo precio total no puede estar vacío"
+                }
+            }
         },
         baseTotalPrice: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "Tienes que introducir el precio total base"
+                },
+                notNull:{
+                    msg: "El campo precio total base no puede estar vacío"
+                }
+            }
         },
         taxesTotalPrice: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "Tienes que introducir el precio total IVA"
+                },
+                notNull:{
+                    msg: "El campo precio total IVA no puede estar vacío"
+                }
+            }
         },
         emisionDate: {
             type: DataTypes.DATE,
-            allowNull: false
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+
         },
         emisionHour: {
             type: DataTypes.TIME,
+            defaultValue: DataTypes.NOW,
             allowNull: false
         }
     }, {

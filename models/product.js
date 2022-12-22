@@ -15,11 +15,28 @@ module.exports = function(sequelize, DataTypes) {
           },
           name: {
             allowNull: false,
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            validate: {
+              notEmpty:{
+                  msg: "El campo nombre no puede estar vacío"
+              },
+              notNull:{
+                  msg: "El campo nombre no puede estar vacío"
+              }
+          }
           },
           price: {
             allowNull: false,
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            validate: {
+              isNumeric: true,
+              notEmpty:{
+                  msg: "El campo precio no puede estar vacío"
+              },
+              notNull:{
+                  msg: "El campo precio no puede estar vacío"
+              }
+          }
           },
           taxesId:{
             type: Sequelize.INTEGER,
@@ -32,7 +49,7 @@ module.exports = function(sequelize, DataTypes) {
           },
           featured: {
             allowNull: true,
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
           },
           productcategoriesId:{
             type: Sequelize.INTEGER, 
@@ -45,11 +62,13 @@ module.exports = function(sequelize, DataTypes) {
           },
           createdAt: {
             allowNull: false,
-            type: Sequelize.DATE
+            type: Sequelize.DATE,
+            defaultValue: DataTypes.NOW
           },
           updatedAt: {
             allowNull: false,
-            type: Sequelize.DATE
+            type: Sequelize.DATE,
+            defaultValue: DataTypes.NOW
           },
           deletedAt: {
             allowNull: true,

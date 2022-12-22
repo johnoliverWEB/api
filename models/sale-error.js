@@ -33,11 +33,27 @@ module.exports = function(sequelize, DataTypes) {
         },
         errorCode: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo Error Code no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo Error Code no puede estar vacío"
+                }
+            }
         },
         errorMessage: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "Debes añadir un mensaje de error"
+                },
+                notNull:{
+                    msg: "Debes añadir un mensaje de error"
+                }
+            }
         }
     }, {
         sequelize,

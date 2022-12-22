@@ -25,23 +25,65 @@ module.exports = function(sequelize, DataTypes) {
         },
         quantity: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isNumeric: true, 
+                notEmpty:{
+                    msg: "El campo cantidad debe contener números"
+                },
+                notNull:{
+                    msg: "El campo cantidad debe contener números"
+                }
+            }
         },
         price: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isNumeric: true, 
+                notEmpty:{
+                    msg: "El campo precio debe contener números"
+                },
+                notNull:{
+                    msg: "El campo precio debe contener números"
+                }
+            }
         },
         unitMeasure: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo unidad de medida (gr., uds.) no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo unidad de medida (gr., uds.) no puede estar vacío"
+                }
+            }
         },
         productName: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo nombre de producto no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo nombre de producto no puede estar vacío"
+                }
+            }
         },
         taxType: {
-            type: DataTypes.DATE,
-            allowNull: false
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo tipo de IVA no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo tipo de IVA no puede estar vacío"
+                }
+            }
         }
     }, {
         sequelize,

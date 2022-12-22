@@ -7,27 +7,7 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
 
-    if (!req.body.type) {
-        // La llamada habrá sido post o put, porque body sirve para enviar datos y dentro de su atributo body tiene la palabra type, asociada a un valor.
-        // De una llamada puedes coger query, params, headers y body.
-        // La exclamación se traduce en "si no", de modo que si no hay ningún valor en el campo, derivará al 400 (errores de cliente)
-
-        res.status(400).send({
-            message: "Faltan campos por rellenar."
-        });
-
-        // Devuelves la respuesta con fallo de cliente.
-
-        return;
-    }
-
-    const tax = {
-        type: req.body.type,
-        valid: req.body.valid ? req.body.valid : true
-        // Preoaras la varuabvke tax con los valores que vienen en la tabla
-    };
-
-    Tax.create(tax).then(data => {
+    Tax.create(req.body).then(data => {
         res.status(200).send(data);
         // Tienes un formulario. Y una tabla en panel.
         // envias un registro y si todo va bien la BBDD te devuelve el dato con su id. se llama AJAX
