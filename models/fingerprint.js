@@ -17,7 +17,15 @@ module.exports = function(sequelize, DataTypes) {
         },
         fingerprint: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo fingerprint no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo fingerprint no puede estar vacío"
+                }
+            }
         }
     }, {
         sequelize,

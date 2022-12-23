@@ -4,22 +4,8 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
 
-    if (!req.body.quantity || !req.body.price || !req.body.unitOfMeasurement || !req.body.productName ) {
-        res.status(400).send({
-            message: "Faltan campos por rellenar."
-        });
 
-        return;
-    }
-
-    const cartdetail = {
-        quantity: req.body.quantity,
-        price: req.body.price,
-        unitOfMeasurement: req.body.unitOfMeasurement,
-        productName: req.body.productName,
-    };
-
-    CartDetail.create(cartdetail).then(data => {
+    CartDetail.create(req.body).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({

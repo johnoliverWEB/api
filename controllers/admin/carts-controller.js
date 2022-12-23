@@ -4,21 +4,8 @@ const Op = db.Sequelize.Op;
 
 
 exports.create = (req, res) => {
-
-    if (!req.body.customerId || req.body.fingerprintId) {
-        res.status(400).send({
-            message: "Faltan campos por rellenar."
-        });
-
-        return;
-    }
-
-    const cart = {
-        customerId: req.body.customerId,
-        fingerprintId: req.body.fingerprintId,
-    };
    
-   Cart.create(Cart).then(data => {
+   Cart.create(req.body).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({

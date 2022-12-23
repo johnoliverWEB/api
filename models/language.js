@@ -9,11 +9,27 @@ module.exports = function(sequelize, DataTypes) {
         },
         name: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo nombre no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo nombre no puede estar vacío"
+                }
+            }
         },
         alias: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo alias no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo alias no puede estar vacío"
+                }
+            }
         }
     }, {
         sequelize,

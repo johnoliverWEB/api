@@ -4,24 +4,7 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
 
-    if (!req.body.reference || !req.body.totalPrice || !req.body.baseTotalPrice || !req.body.taxesTotalPrice || !req.body.emisionDate || !req.body.emisionHour) {
-        res.status(400).send({
-            message: "Faltan campos por rellenar."
-        });
-
-        return;
-    }
-
-    const repayment = {
-        reference: req.body.reference,
-        totalPrice: req.body.totalPrice,
-        baseTotalPrice: req.body.baseTotalPrice,
-        taxesTotalPrice: req.body.taxesTotalPrice,
-        emisionDate: req.body.emisionDate,
-        emisionHour: req.body.emisionHour,
-    };
-
-    Repayment.create(repayment).then(data => {
+    Repayment.create(req.body).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({

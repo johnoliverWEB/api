@@ -100,35 +100,101 @@ module.exports = function(sequelize, DataTypes) {
         },
         fileName: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo nombre de archivo no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo nombre de archivo no puede estar vacío"
+                }
+            }
         },
         content: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo contenido no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo contenido no puede estar vacío"
+                }
+            }
         },
         mymeType: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo mimetype no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo mimetype no puede estar vacío"
+                }
+            }
         },
         grid: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo grid no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo grid no puede estar vacío"
+                }
+            }
         },
         sizeBytes: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo size bytes no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo size bytes no puede estar vacío"
+                }
+            }
         },
         widthPx: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isNumeric: true,
+                notEmpty:{
+                    msg: "El campo width no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo width no puede estar vacío"
+                }
+            }
         },
         heightPx: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isNumeric: true,
+                notEmpty:{
+                    msg: "El campo height no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo height no puede estar vacío"
+                }
+            }
         },
         quality: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "El campo calidad no puede estar vacío"
+                },
+                notNull:{
+                    msg: "El campo calidad no puede estar vacío"
+                }
+            }
         }
     }, {
         sequelize,

@@ -1,11 +1,9 @@
 module.exports = app => {
 
     const router = require("express").Router();
-   
-    const controller = require("../controllers/admin/fingerprint-controller.js");
-
     const authJwt  = require("../middlewares/auth-jwt.js");
-
+    const controller = require("../controllers/admin/user-controller.js");
+  
     app.use(function(req, res, next) {
         res.header(
           "Access-Control-Allow-Headers",
@@ -13,14 +11,12 @@ module.exports = app => {
         );
         next();
     });
-
+  
     router.post("/", [authJwt.verifyUserToken], controller.create);
     router.get("/", [authJwt.verifyUserToken], controller.findAll);  
     router.get("/:id", [authJwt.verifyUserToken], controller.findOne);  
     router.put("/:id", [authJwt.verifyUserToken], controller.update);  
     router.delete("/:id", [authJwt.verifyUserToken], controller.delete);
   
-    app.use('/api/admin/fingerprint', router);
-    // Cada vez que alguien llame a esta url por este metodo get llamarás a findAll
-    // Para cuaaluquiier panel de administraion basta con sustituir el enlace de arriba y este de abajo
-};
+    app.use('/api/admin/users', router);
+  };

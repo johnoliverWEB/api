@@ -1,43 +1,56 @@
 const db = require("../../models");
-const Language = db.Language;
+const User = db.User;
 const Op = db.Sequelize.Op;
-
 
 exports.create = (req, res) => {
 
-   Language.create(req.body).then(data => {
+    User.create(req.body).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({
-            message: err.message || "Algún error ha surgido al insertar el dato."
+            message: err.errors || "Algún error ha surgido al insertar el dato."
         });
     });
 };
 
 exports.findAll = (req, res) => {
 
+    let page = req.query.page || 1;
+    let limit = req.query.size || 10;
+    let offset = (page - 1) * limit;
+
     let whereStatement = {};
-    if(req.query.name) 
-        whereStatement.name = {[Op.substring]: req.query.name};
-       
     let condition = Object.keys(whereStatement).length > 0 ? {[Op.and]: [whereStatement]} : {};
 
-    Language.findAll({ where: condition }).then(data => {
-        res.status(200).send(data);
+    User.findAndCountAll({
+        where: condition, 
+        attributes: ['id', 'name', 'email'],
+        limit: limit,
+        offset: offset,
+        order: [['createdAt', 'DESC']]
+    })
+    .then(result => {
+
+        result.meta = {
+            total: result.count,
+            pages: Math.ceil(result.count / limit),
+            currentPage: page
+        };
+
+        res.status(200).send(result);
+
     }).catch(err => {
         res.status(500).send({
-            message: err.message || "Algún error ha surgido al recuperar los datos."
+            message: err.errors || "Algún error ha surgido al recuperar los datos."
         });
     });
 };
-
 
 exports.findOne = (req, res) => {
 
     const id = req.params.id;
 
-
-    Language.findByPk(id).then(data => {
+    User.findByPk(id).then(data => {
 
         if (data) {
             res.status(200).send(data);
@@ -58,7 +71,7 @@ exports.update = (req, res) => {
 
     const id = req.params.id;
 
-    Language.update(req.body, {
+    User.update(req.body, {
         where: { id: id }
     }).then(num => {
         if (num == 1) {
@@ -81,7 +94,7 @@ exports.delete = (req, res) => {
 
     const id = req.params.id;
 
-    Language.destroy({
+    User.destroy({
         where: { id: id }
     }).then(num => {
         if (num == 1) {

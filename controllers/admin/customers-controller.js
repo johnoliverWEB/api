@@ -5,23 +5,7 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
 
-    if (!req.body.name || !req.body.surname || !req.body.phone || !req.body.email || !req.body.address) {
-        res.status(400).send({
-            message: "Faltan campos por rellenar."
-        });
-
-        return;
-    }
-
-    const customer = {
-        name: req.body.name,
-        surname: req.body.surname,
-        phone: req.body.phone,
-        email: req.body.email,
-        address: req.body.address,
-    };
-
-    Customer.create(customer).then(data => {
+    Customer.create(req.body).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({

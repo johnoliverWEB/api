@@ -5,21 +5,8 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
 
-    if (!req.body.name) {
-        res.status(400).send({
-            message: "Faltan campos por rellenar."
-        });
-
-        return;
-    }
-
-    const paymentMethod = {
-        name: req.body.name,
-        visible: req.body.visible ? req.body.visible : true
-       
-    };
-
-   PaymentMethod.create(paymentMethod).then(data => {
+ 
+   PaymentMethod.create(req.body).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({

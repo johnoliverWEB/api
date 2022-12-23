@@ -4,32 +4,8 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
 
-    if (!req.body.title || !req.body.alt || !req.body.path || !req.body.entity || !req.body.entityId || !req.body.languageAlias || !req.body.fileName || !req.body.content || !req.body.mymeType || !req.body.grid || !req.body.sizeBytes || !req.body.widthPx || !req.body.heightPx || !req.body.quality) {
-        res.status(400).send({
-            message: "Faltan campos por rellenar."
-        });
 
-        return;
-    }
-
-    const resizeimage = {
-        title: req.body.title, 
-        alt: req.body.alt, 
-        path: req.body.path, 
-        entity: req.body.entity,
-        entityId: req.body.entityId,
-        languageAlias: req.body.languageAlias,
-        fileName: req.body.fileName,
-        content: req.body.content,
-        mymeType: req.body.mymeType,
-        grid: req.body.grid,
-        sizeBytes: req.body.sizeBytes,
-        widthPx: req.body.widthPx,
-        heightPx: req.body.heightPx,
-        quality: req.body.quality
-    };
-
-    ResizeImage.create(resizeimage).then(data => {
+    ResizeImage.create(req.body).then(data => {
         res.status(200).send(data);
     }).catch(err => {
         res.status(500).send({

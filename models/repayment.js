@@ -33,27 +33,70 @@ module.exports = function(sequelize, DataTypes) {
         },
         reference: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                notEmpty:{
+                    msg: "Debes introducir una referencia"
+                },
+                notNull:{
+                    msg: "Debes introducir una referencia"
+                }
+            }
         },
         totalPrice: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isInt:{
+                    msg: "Debe ser un número"
+                },
+                notEmpty:{
+                    msg: "Debes añadir un precio total"
+                },
+                notNull:{
+                    msg: "Debes añadir un precio total"
+                }
+            }
         },
         baseTotalPrice: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isInt:{
+                    msg: "Debe ser un número"
+                },
+                notEmpty:{
+                    msg: "Debes añadir un precio total base"
+                },
+                notNull:{
+                    msg: "Debes añadir un precio total base"
+                }
+            }
         },
         taxesTotalPrice: {
             type: DataTypes.STRING(255),
-            allowNull: false
+            allowNull: false,
+            validate: {
+                isInt:{
+                    msg: "Debe ser un número"
+                },
+                notEmpty:{
+                    msg: "Debes añadir un precio total IVA"
+                },
+                notNull:{
+                    msg: "Debes añadir un precio total IVA"
+                }
+            },
         },
         emisionDate: {
             type: DataTypes.DATE,
-            allowNull: false
+            allowNull: false,
+            defaultValue: DataTypes.NOW
         },
         emisionHour: {
             type: DataTypes.TIME,
-            allowNull: false
+            allowNull: false,
+            defaultValue: DataTypes.NOW
         }
     }, {
         sequelize,
