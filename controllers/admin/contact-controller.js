@@ -1,14 +1,14 @@
 const db = require("../../models");
 const Contact = db.Contact;
-const Op = db.Sequelize.Op;
-
 
 exports.create = (req, res) => {
-
-
-    Contact.create(req.body).then(data => {
-        res.status(200).send(data);
-    }).catch(err => {
+    Contact.create(req.body)
+        .then(data => {
+            res.status(200).send({
+                message: "Datos insertados correctamente"
+            });
+        })
+    .catch(err => {
         res.status(500).send({
             message: err.message || "Algún error ha surgido al insertar el dato."
         });

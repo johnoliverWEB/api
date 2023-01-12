@@ -7,6 +7,8 @@ const OAuth2 = google.auth.OAuth2;
 // Detrás de esta librería hay millones de cosas que podemos hacer, 
 const dotenv = require('dotenv').config();
 const process = require('process');
+const sentEmails = require('../models/sent-emails');
+
 
 module.exports = class EmailService {
     // Exports module indica que puede ser llamado desde otra parte del código
@@ -80,6 +82,7 @@ module.exports = class EmailService {
 // Este es otro método: una función destinada a que se mande el email
         const mailOptions = {
             from: this.email, 
+            name: email.name,
             to: destination,
             subject: email.subject,
             html: email.content
@@ -89,7 +92,19 @@ module.exports = class EmailService {
             if (err) {
                 console.log(err);
             } else {
-               // Aquí podríamos registrar en una base de datos los correos enviados
+                let sentEmailsData = {
+                    name: req.body.name,
+                    email: req.body.email,
+                    message: req.body.message
+                };
+                sentEmails.create(sentEmailsData)
+                    .then(() => {
+                        console.log("Email registrado en la tabla sent-emails");
+                    })
+                    .catch((err) => {
+                        console.log("Error al registrar el email en la tabla sent-emails:", err);
+                    }
+                );
             }
         });
     }
