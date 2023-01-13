@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define('sentEmails', {
+    return sequelize.define('SentEmails', {
         id: {
             autoIncrement: true,
             type: DataTypes.INTEGER,

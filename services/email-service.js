@@ -7,7 +7,9 @@ const OAuth2 = google.auth.OAuth2;
 // Detrás de esta librería hay millones de cosas que podemos hacer, 
 const dotenv = require('dotenv').config();
 const process = require('process');
-const sentEmails = require('../models/sent-emails');
+// La forma correcta de traer un modelo es la que sigue:
+const db = require("../models");
+const SentEmails = db.SentEmails;
 
 
 module.exports = class EmailService {
@@ -60,7 +62,7 @@ module.exports = class EmailService {
             });
         }
     }
-
+  
     getAccessToken() {
 // Esto es un método: coge el token. Enlazando con el objeto anterior.
         const myOAuth2Client = new OAuth2(
@@ -91,13 +93,20 @@ module.exports = class EmailService {
         this.transport.sendMail(mailOptions, function (err, result) {
             if (err) {
                 console.log(err);
+            
             } else {
+                
+                // Recurrimos a let para no anular el resto de solicitudes (req.body)
+
                 let sentEmailsData = {
-                    name: req.body.name,
-                    email: req.body.email,
-                    message: req.body.message
+                
+                    // Las denominaciones deben coincidir con el name asignado en el html e ir vinculadas a las variables asignadas
+                    name: email.name,
+                    email: destination,
+                    message: email.content,
                 };
-                sentEmails.create(sentEmailsData)
+
+                SentEmails.create(sentEmailsData)
                     .then(() => {
                         console.log("Email registrado en la tabla sent-emails");
                     })
@@ -109,3 +118,4 @@ module.exports = class EmailService {
         });
     }
 }
+
