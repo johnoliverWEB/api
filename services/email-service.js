@@ -81,6 +81,7 @@ module.exports = class EmailService {
     }
 
     sendEmail(email, destination = this.email) {
+
 // Este es otro método: una función destinada a que se mande el email
         const mailOptions = {
             from: this.email, 

@@ -1,4 +1,4 @@
-module.exports = app => {
+module.exports = (app, upload) => {
 
     const router = require("express").Router();
     // Usamos una función de la librería expres para crear rutas.

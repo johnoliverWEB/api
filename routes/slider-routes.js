@@ -1,4 +1,4 @@
-module.exports = app => {
+module.exports = (app, upload) => {
 
     const router = require("express").Router();
     // Usamos una función de la librería expres para crear rutas.
@@ -14,7 +14,12 @@ module.exports = app => {
         next();
     });
 
-    router.post("/", [authJwt.verifyUserToken], controller.create);
+    let files = [
+      {name: 'file[]', maxCount: 3},
+      {name: 'avatar', maxCount: 1},
+    ]
+
+    router.post("/", [authJwt.verifyUserToken, upload.fields([{name: 'image', maxCount: 1}])], controller.create);
     router.get("/", [authJwt.verifyUserToken], controller.findAll);  
     router.get("/:id", [authJwt.verifyUserToken], controller.findOne);  
     router.put("/:id", [authJwt.verifyUserToken], controller.update);  

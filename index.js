@@ -3,6 +3,7 @@ const cors = require("cors");
 const fs = require('fs'); 
 const app = express();
 const db = require("./models");
+const multer = require('multer');
 // APP es EXPRESS y db SEQUELIZE
 
 var corsOptions = {
@@ -20,16 +21,26 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Son dos partes de los mismo, habilita recibir llamadas a través de url y jasons para intercambiar datos
 
-var routePath="./routes/";
-// Le acabas de decir donde se encuentran tus rutas y lo guardas en su variable routePath.
-
-fs.readdirSync(routePath).forEach(function(file) {
-    require(routePath + file)(app);
-    // // FS es una libreria nativa de node.js, para tratar con carpetas y archivos. Aquñi le pides que lea una carpeta en concreto, de modo que haces un blkcue
-    // sobre todos los archivos haga un bucle, los reccorre y para cada uno de ellos compone un require.
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'storage/tmp/')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
 });
 
+const upload = multer({ storage: storage })
 
+var routePath="./routes/";
+
+fs.readdirSync(routePath).forEach(function(file) {
+    require(routePath + file)(app, upload);
+});
+
+// Le acabas de decir donde se encuentran tus rutas y lo guardas en su variable routePath.
+    // // FS es una libreria nativa de node.js, para tratar con carpetas y archivos. Aquñi le pides que lea una carpeta en concreto, de modo que haces un blkcue
+  // sobre todos los archivos haga un bucle, los reccorre y para cada uno de ellos compone un require.
 
 const PORT = process.env.PORT || 8080;
 

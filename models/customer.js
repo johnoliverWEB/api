@@ -1,4 +1,6 @@
 const Sequelize = require('sequelize');
+const emailValidator = require('deep-email-validator')
+
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define('Customer', {
         id: {
@@ -54,6 +56,14 @@ module.exports = function(sequelize, DataTypes) {
                 },
                 notNull:{
                     msg: "El campo email debe contener una dirección válida"
+                },
+                customValidator(value) {
+                    return emailValidator.validate(value).then((data) => {
+                        console.log(data);
+                        if(data.valid == false){
+                            throw new Error("Compruebe que ha escrito su email correctamente");
+                        }
+                    })
                 }
             }
     
