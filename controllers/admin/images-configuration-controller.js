@@ -2,64 +2,66 @@ const db = require("../../models");
 const ImageConfiguration = db.ImageConfiguration;
 const Op = db.Sequelize.Op;
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
 
-    ImageConfiguration.create(req.body).then(data => {
+    try{
+        let data = await ImageConfiguration.create(req.body);
         res.status(200).send(data);
-    }).catch(err => {
+    }catch(error){
         res.status(500).send({
-            message: err.message || "Algún error ha surgido al insertar el dato."
+            message: error.message || "Algún error ha surgido al insertar el dato.",
+            errors: error.errors
         });
-    });
+    }
 };
 
-exports.findAll = (req, res) => {
+// exports.findAll = (req, res) => {
 
-    let whereStatement = {};
+//     let whereStatement = {};
 
-    if(req.query.type) 
+//     if(req.query.type) 
    
-        whereStatement.type = {[Op.substring]: req.query.type};
+//         whereStatement.type = {[Op.substring]: req.query.type};
     
        
-    if(req.query.valid)
-        whereStatement.valid = {[Op.substring]: req.query.valid};
+//     if(req.query.valid)
+//         whereStatement.valid = {[Op.substring]: req.query.valid};
    
 
-    let condition = Object.keys(whereStatement).length > 0 ? {[Op.and]: [whereStatement]} : {};
+//     let condition = Object.keys(whereStatement).length > 0 ? {[Op.and]: [whereStatement]} : {};
 
-    ImageConfiguration.findAll({ where: condition }).then(data => {
-        res.status(200).send(data);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Algún error ha surgido al recuperar los datos."
-        });
-    });
-};
-
-
-exports.findOne = (req, res) => {
-
-    const id = req.params.id;
+//     ImageConfiguration.findAll({ where: condition }).then(data => {
+//         res.status(200).send(data);
+//     }).catch(err => {
+//         res.status(500).send({
+//             message: err.message || "Algún error ha surgido al recuperar los datos."
+//         });
+//     });
+// };
 
 
-    ImageConfiguration.findByPk(id).then(data => {
+// exports.findOne = (req, res) => {
+
+//     const id = req.params.id;
+
+
+//     ImageConfiguration.findByPk(id).then(data => {
         
 
-        if (data) {
-            res.status(200).send(data);
-        } else {
-            res.status(404).send({
-                message: `No se puede encontrar el elemento con la id=${id}.`
-            });
-        }
+//         if (data) {
+//             res.status(200).send(data);
+//         } else {
+//             res.status(404).send({
+//                 message: `No se puede encontrar el elemento con la id=${id}.`
+//             });
+//         }
 
-    }).catch(err => {
-        res.status(500).send({
-            message: "Algún error ha surgido al recuperar la id=" + id
-        });
-    });
-};
+//     }).catch(err => {
+//         res.status(500).send({
+//             message: "Algún error ha surgido al recuperar la id=" + id
+//         });
+//     });
+// };
 
 exports.update = (req, res) => {
 

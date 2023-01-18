@@ -39,9 +39,6 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING(255),
             allowNull: false,
             validate: {
-                isInt:{
-                    msg: "Debe ser un número"
-                },
                 notEmpty:{
                     msg: "El campo alt no puede estar vacío"
                 },
@@ -122,7 +119,7 @@ module.exports = function(sequelize, DataTypes) {
                 }
             }
         },
-        mymeType: {
+        mimeType: {
             type: DataTypes.STRING(255),
             allowNull: false,
             validate: {

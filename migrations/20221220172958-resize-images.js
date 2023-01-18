@@ -61,7 +61,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      mymeType: {
+      mimeType: {
         allowNull: false,
         type: Sequelize.STRING
       },
