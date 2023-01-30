@@ -15,62 +15,12 @@ exports.create = async (req, res) => {
     }
 };
 
-// exports.findAll = (req, res) => {
-
-//     let whereStatement = {};
-
-//     if(req.query.type) 
-   
-//         whereStatement.type = {[Op.substring]: req.query.type};
-    
-       
-//     if(req.query.valid)
-//         whereStatement.valid = {[Op.substring]: req.query.valid};
-   
-
-//     let condition = Object.keys(whereStatement).length > 0 ? {[Op.and]: [whereStatement]} : {};
-
-//     ImageConfiguration.findAll({ where: condition }).then(data => {
-//         res.status(200).send(data);
-//     }).catch(err => {
-//         res.status(500).send({
-//             message: err.message || "Algún error ha surgido al recuperar los datos."
-//         });
-//     });
-// };
-
-
-// exports.findOne = (req, res) => {
-
-//     const id = req.params.id;
-
-
-//     ImageConfiguration.findByPk(id).then(data => {
-        
-
-//         if (data) {
-//             res.status(200).send(data);
-//         } else {
-//             res.status(404).send({
-//                 message: `No se puede encontrar el elemento con la id=${id}.`
-//             });
-//         }
-
-//     }).catch(err => {
-//         res.status(500).send({
-//             message: "Algún error ha surgido al recuperar la id=" + id
-//         });
-//     });
-// };
-
 exports.update = (req, res) => {
 
     const id = req.params.id;
 
     ImageConfiguration.update(req.body, {
- 
         where: { id: id }
-      
     }).then(num => {
         if (num == 1) {
             res.status(200).send({

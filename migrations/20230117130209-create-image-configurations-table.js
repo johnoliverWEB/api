@@ -3,7 +3,6 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-   
     await queryInterface.createTable('image_configurations', {
       id: {
         allowNull: false,
@@ -15,27 +14,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      directory: {
+      name: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      type: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      content: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      grid: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      contentAccepted: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      extensionConversion: {
+      mediaQuery: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -44,10 +27,6 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       heightPx: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      quality: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
@@ -60,14 +39,12 @@ module.exports = {
         type: Sequelize.DATE
       },
       deletedAt: {
-        allowNull: true,
         type: Sequelize.DATE
       }
     });
   },
 
   async down (queryInterface, Sequelize) {
-   
     await queryInterface.dropTable('image_configurations');
   }
 };

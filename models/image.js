@@ -1,17 +1,45 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-    const ImageConfiguration = sequelize.define('ImageConfiguration', {
+    const Image = sequelize.define('Image', {
         id: {
             autoIncrement: true,
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true
         },
+        imageConfigurationId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        entityId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
         entity: {
             type: DataTypes.STRING(255),
             allowNull: false
         },
         name: {
+            type: DataTypes.TEXT,
+            allowNull: false
+        },
+        originalFilename: {
+            type: DataTypes.STRING(255),
+            allowNull: false
+        },
+        resizedFilename: {
+            type: DataTypes.STRING(255),
+            allowNull: false
+        },
+        title: {
+            type: DataTypes.STRING(255),
+            allowNull: false
+        },
+        alt: {
+            type: DataTypes.STRING(255),
+            allowNull: false
+        },
+        languageAlias: {
             type: DataTypes.STRING(255),
             allowNull: false
         },
@@ -19,11 +47,11 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING(255),
             allowNull: false
         },
-        widthPx: {
+        sizeBytes: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        heightPx: {
+        latencyMs: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
@@ -41,7 +69,7 @@ module.exports = function(sequelize, DataTypes) {
         }
     }, {
         sequelize,
-        tableName: 'image_configurations',
+        tableName: 'images',
         timestamps: true,
         paranoid: true,
         indexes: [
@@ -52,13 +80,20 @@ module.exports = function(sequelize, DataTypes) {
                 fields: [
                     { name: "id" },
                 ]
+            },
+            {
+                name: "FK_image_resizes_image_configurations",
+                using: "BTREE",
+                fields: [
+                    { name: "imageConfigurationId" },
+                ]
             }
         ]
     });
 
-    ImageConfiguration.associate = function(models) {
-        ImageConfiguration.hasMany(models.Image, { as: 'images', foreignKey: 'imageConfigurationId'});
+    Image.associate = function(models) {
+        Image.belongsTo(models.ImageConfiguration, { foreignKey: 'imageConfigurationId' });
     };
 
-    return ImageConfiguration;
+    return Image;
 };

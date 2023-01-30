@@ -3,23 +3,42 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-   
-    await queryInterface.createTable('original_images', {
+    await queryInterface.createTable('images', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      path: {
+      imageConfigurationId: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
+      },
+      entityId: {
+        allowNull: false,
+        type: Sequelize.INTEGER
       },
       entity: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      entityId: {
+      name: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      originalFilename: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      resizedFilename: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      title: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      alt: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -27,15 +46,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      fileName: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      content: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      mimetype: {
+      mediaQuery: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -43,11 +54,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      widthPx: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      heightPx: {
+      latencyMs: {
         allowNull: false,
         type: Sequelize.INTEGER
       },
@@ -60,14 +67,12 @@ module.exports = {
         type: Sequelize.DATE
       },
       deletedAt: {
-        allowNull: true,
         type: Sequelize.DATE
       }
     });
   },
 
   async down (queryInterface, Sequelize) {
-   
-    await queryInterface.dropTable('original_images');
+    await queryInterface.dropTable('images');
   }
 };
