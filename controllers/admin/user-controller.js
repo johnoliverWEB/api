@@ -4,6 +4,8 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
 
+    console.log(req.body);
+
     User.create(req.body).then(data => {
         res.status(200).send(data);
     }).catch(err => {
@@ -50,7 +52,9 @@ exports.findOne = (req, res) => {
 
     const id = req.params.id;
 
-    User.findByPk(id).then(data => {
+    User.findByPk(id, {
+        attributes: ['name', 'email']
+    }).then(data => {
 
         if (data) {
             res.status(200).send(data);
