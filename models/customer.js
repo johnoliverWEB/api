@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const emailValidator = require('deep-email-validator')
 
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define('Customer', {
+    const Customer = sequelize.define('Customer', {
         id: {
             autoIncrement: true,
             type: DataTypes.INTEGER,
@@ -93,4 +93,14 @@ module.exports = function(sequelize, DataTypes) {
             },
         ]
     });
+
+    Customer.associate = function(models){
+        Customer.hasMany(models.Cart, { as: "carts", foreignKey: "customertId"});
+        Customer.hasMany(models.Fingerprint, { as: "fingerprints", foreignKey: "customerId"});
+        Customer.hasMany(models.Repayment, { as: "repayments", foreignKey: "customerId"});
+        Customer.hasMany(models.SaleError, { as: "sale_errors", foreignKey: "customerId"});
+        Customer.hasMany(models.Sale, { as: "sales", foreignKey: "customerId"});
+    };
+
+    return Customer;
 };

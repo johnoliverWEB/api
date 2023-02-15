@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define('CartDetail', {
+    const CartDetail = sequelize.define('CartDetail', {
         id: {
             autoIncrement: true,
             type: DataTypes.INTEGER,
@@ -82,6 +82,14 @@ module.exports = function(sequelize, DataTypes) {
                     { name: "taxId" },
                 ]
             },
+
         ]
     });
+
+    CartDetail.associate = function(models) {
+        CartDetail.belongsTo(models.Cart, { as: "cart", foreignKey: "cartId"});
+        CartDetail.belongsTo(models.Product, { as: "product", foreignKey: "productId"});
+    };
+
+    return CartDetail;
 };
